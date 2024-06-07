@@ -1,7 +1,6 @@
-# pytorch_fun
-New boot goofin with PyTorch
+# New boot goofin with PyTorch
 
-Playing around with PyTorch as I explore, review, and re-explore Deep Learning basics,
+Playing around with PyTorch as I review, explore, and re-explore Deep Learning basics,
 practices, and implementation strategies.
 
 ## Contents
