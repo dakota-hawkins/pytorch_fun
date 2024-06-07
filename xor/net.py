@@ -5,16 +5,14 @@ import torchviz
 class XorNet(torch.nn.Module):
     def __init__(self, rate: float = 1e-3):
         super().__init__()
-        self.hidden_layer = torch.nn.Linear(2, 2)
-        self.hidden_layer.weight.data.normal_(0, 1)
-        self.h1_activation = torch.nn.functional.relu
-        self.output_layer = torch.nn.Linear(2, 1)
-        self.hidden_layer.weight.data.normal_(0, 1)
+        self.mlp = torch.nn.Sequential(
+            torch.nn.Linear(2, 2), torch.nn.ReLU(), torch.nn.Linear(2, 1)
+        )
         self.loss = torch.nn.MSELoss()
         self.optimizer = torch.optim.SGD(self.parameters(), lr=rate)
 
     def forward(self, X: torch.Tensor) -> torch.Tensor:
-        logits = self.output_layer(self.h1_activation(self.hidden_layer(X)))
+        logits = self.mlp(X)
         return logits
 
     def get_device(self) -> str:
@@ -27,11 +25,10 @@ class XorNet(torch.nn.Module):
     def fit(self, dataloader, n_epochs: int = 1000, verbose: bool = True):
         self.train()
         device = self.get_device()
-        loops = 0
         size = len(dataloader.dataset) * n_epochs
         for t in range(n_epochs):
             for batch, (X, y) in enumerate(dataloader):
-                # X, y = X.to(device), y.to(device)
+                X, y = X.to(device), y.to(device)
 
                 y_pred = self(X)
                 loss = self.loss(y_pred, y)
@@ -41,11 +38,10 @@ class XorNet(torch.nn.Module):
                 self.optimizer.step()
                 self.optimizer.zero_grad()
 
-                loops += 1
-
-            if (100 % (t + 1)) == 0 and verbose:
+            if (t) % 200 == 0 and verbose:
                 loss = loss.item()
-                print(f"Loss: {loss:>7f} [{t + 1:>5d}/{n_epochs:>5d}]")
+                print(f"Loss: {loss:>7f} [{t + 1:>5d}/{n_epochs:>5d}]", flush=True)
+        print(f"Loss: {loss:>7f} [{t + 1:>5d}/{n_epochs:>5d}]", flush=True)
 
     def test(self, dataloader):
         size = len(dataloader.dataset)
