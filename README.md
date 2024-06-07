@@ -11,5 +11,6 @@ pytorch_fun
  ┣ xor
  ┃ ┣ net.py          | XOR implementation with 2D MLP
  ┃ ┗ training.ipynb  | Training of XorNet
+ ┣ mixin.py          | Mixin nn.Module for basic training
  ┗ README.md
  ```
