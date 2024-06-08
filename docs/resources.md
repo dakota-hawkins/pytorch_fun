@@ -18,6 +18,7 @@
 
 - [GNN Stanford](https://web.stanford.edu/class/cs224w/)
 - [GNN Penn](https://gnn.seas.upenn.edu/)
+- [Transformers, Hugging Face](https://huggingface.co/learn/nlp-course/chapter1/1)
 
 ## Topic Papers, Book Chapters, and Posts
 
@@ -47,3 +48,5 @@
 	* [ ] [Deep Learning Book](https://www.deeplearningbook.org/contents/autoencoders.html)
 * Basics
 	* [ ] [Deep Learning Book](https://www.deeplearningbook.org/)
+* General Topics
+	* [ ] [ML for Protein Engineering, Arxiv](https://arxiv.org/abs/2305.16634)
