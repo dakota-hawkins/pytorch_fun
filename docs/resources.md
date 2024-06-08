@@ -6,9 +6,9 @@
 - [ ] Transformers
 - [ ] Autoencoders
 - [ ] Basics
-	- [ ] Linear Algebra
-	- [ ] Probability
-	- [ ] Numerical Computation
+	- [x] Linear Algebra
+	- [x] Probability
+	- [x] Numerical Computation
 	- [ ] Training
 
 
