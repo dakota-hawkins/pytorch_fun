@@ -45,6 +45,7 @@
 * Protein Language Models
 	* [ ] [Rives 2021, PNAS](https://www.pnas.org/doi/epdf/10.1073/pnas.2016239118)
 	* [ ] [Lin 2023, Science](https://www.science.org/doi/10.1126/science.ade2574)
+ 	* [ ] [Chen 2023, Xtrimo, Arxiv](https://www.biorxiv.org/content/10.1101/2023.07.05.547496v3.full.pdf)
 * Autoencoders
 	* [ ] [Deep Learning Book](https://www.deeplearningbook.org/contents/autoencoders.html)
 * Basics
