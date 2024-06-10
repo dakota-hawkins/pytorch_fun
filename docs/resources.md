@@ -40,7 +40,8 @@
 	* [ ] [Deep Learning Book](https://www.deeplearningbook.org/contents/representation.html)
 * Transformers
 	* [ ] [arxiv](https://arxiv.org/abs/2304.10557)
-	* [ ] [Google Research](https://blog.research.google/2017/08/transformer-novel-neural-network.html)
+	* [ ] [Attention is All You Need, Arxiv](https://arxiv.org/pdf/1706.03762)
+	* [x] [Google Research](https://blog.research.google/2017/08/transformer-novel-neural-network.html)
 * Protein Language Models
 	* [ ] [Rives 2021, PNAS](https://www.pnas.org/doi/epdf/10.1073/pnas.2016239118)
 	* [ ] [Lin 2023, Science](https://www.science.org/doi/10.1126/science.ade2574)
