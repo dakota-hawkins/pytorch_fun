@@ -5,11 +5,13 @@
 - [ ] LLMs
 - [ ] Transformers
 - [ ] Autoencoders
+- [ ] RNNs
 - [ ] Basics
 	- [x] Linear Algebra
 	- [x] Probability
 	- [x] Numerical Computation
-	- [ ] Training
+	- [x] Training
+ 	- [ ] Regularization
 
 
 ## Resources
