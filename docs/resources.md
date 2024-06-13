@@ -44,6 +44,8 @@
 	* [ ] [arxiv](https://arxiv.org/abs/2304.10557)
 	* [ ] [Attention is All You Need, Arxiv](https://arxiv.org/pdf/1706.03762)
 	* [x] [Google Research](https://blog.research.google/2017/08/transformer-novel-neural-network.html)
+ 	* [ ] [Wikipedia](https://en.wikipedia.org/wiki/Transformer_(deep_learning_architecture))
+  		* Actually good lmao 
 * Protein Language Models
 	* [ ] [Rives 2021, PNAS](https://www.pnas.org/doi/epdf/10.1073/pnas.2016239118)
 	* [ ] [Lin 2023, Science](https://www.science.org/doi/10.1126/science.ade2574)
