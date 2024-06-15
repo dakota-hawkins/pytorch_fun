@@ -5,20 +5,31 @@ import torchviz
 class MixNet(torch.nn.Module):
     def __init__(self):
         super().__init__()
+        self.loss_ = []
+        self.epochs_ = []
+        self.to(MixNet.get_device())
 
-    def get_device(self) -> str:
+    @staticmethod
+    def get_device() -> str:
         if torch.cuda.is_available():
             return torch.device("cuda")
         elif torch.backends.mps.is_available():
             return torch.device("mps")
         return torch.device("cpu")
 
-    def fit(self, dataloader, n_epochs: int = 1000, verbose: bool = True):
+    def fit(
+        self,
+        data_loader,
+        n_epochs: int = 1000,
+        verbose: bool = True,
+        verbose_step=200,
+        track_loss=False,
+    ):
         self.train()
         device = self.get_device()
-        size = len(dataloader.dataset) * n_epochs
+
         for t in range(n_epochs):
-            for batch, (X, y) in enumerate(dataloader):
+            for batch, (X, y) in enumerate(data_loader):
                 X, y = X.to(device), y.to(device)
 
                 y_pred = self(X)
@@ -30,12 +41,21 @@ class MixNet(torch.nn.Module):
                 self.optimizer.step()
                 self.optimizer.zero_grad()
 
-            if t == 0 or (t + 1) % 200 == 0 and verbose:
-                loss = loss.item()
-                print(f"Loss: {loss:>7f} [{t + 1:>5d}/{n_epochs:>5d}]", flush=True)
-        print(f"Loss: {loss:>7f} [{t + 1:>5d}/{n_epochs:>5d}]", flush=True)
+            if t == 0 or (t + 1) % verbose_step == 0:
+                loss_value = loss.item()
+                if verbose:
+                    print(
+                        f"Loss: {loss_value:>7f} [{t + 1:>5d}/{n_epochs:>5d}]",
+                        flush=True,
+                    )
+                if track_loss:
+                    self.loss_.append(loss_value)
+                    self.epochs_.append(t)
+        if verbose:
+            print(f"Loss: {loss_value:>7f} [{t + 1:>5d}/{n_epochs:>5d}]", flush=True)
 
     def __calculate_loss(self, y_pred, y):
+        """Private loss function to provide for easy extension"""
         return self.loss(y_pred, y)
 
     def test(self, dataloader):
