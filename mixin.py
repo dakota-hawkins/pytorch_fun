@@ -8,6 +8,7 @@ class MixNet(torch.nn.Module):
         self.loss_ = []
         self.epochs_ = []
         self.to(MixNet.get_device())
+        self.input_size_ = 2
 
     @staticmethod
     def get_device() -> str:
@@ -83,6 +84,6 @@ class MixNet(torch.nn.Module):
         return score, loss
 
     def draw_network(self):
-        X = torch.randn((1, 2))
+        X = torch.randn((1, self.input_size_))
         y = self(X)
         return torchviz.make_dot(y.mean(), params=dict(self.named_parameters()))
