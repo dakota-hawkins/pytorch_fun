@@ -3,7 +3,7 @@ import torchviz
 
 
 class MixNet(torch.nn.Module):
-    def __init__(self, rate: float = 1e-3):
+    def __init__(self):
         super().__init__()
 
     def get_device(self) -> str:
@@ -22,17 +22,21 @@ class MixNet(torch.nn.Module):
                 X, y = X.to(device), y.to(device)
 
                 y_pred = self(X)
-                loss = self.loss(y_pred, y)
+                # function call to allow subclass specific loss evaluations
+                loss = self.__calculate_loss(y_pred, y)
 
                 # backprop
                 loss.backward()
                 self.optimizer.step()
                 self.optimizer.zero_grad()
 
-            if (t) % 200 == 0 and verbose:
+            if t == 0 or (t + 1) % 200 == 0 and verbose:
                 loss = loss.item()
                 print(f"Loss: {loss:>7f} [{t + 1:>5d}/{n_epochs:>5d}]", flush=True)
         print(f"Loss: {loss:>7f} [{t + 1:>5d}/{n_epochs:>5d}]", flush=True)
+
+    def __calculate_loss(self, y_pred, y):
+        return self.loss(y_pred, y)
 
     def test(self, dataloader):
         size = len(dataloader.dataset)
