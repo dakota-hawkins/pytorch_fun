@@ -5,7 +5,8 @@ import torchviz
 class MixNet(torch.nn.Module):
     def __init__(self):
         super().__init__()
-        self.loss_ = []
+        self.mean_loss_ = []
+        self.std_loss_ = []
         self.epochs_ = []
         self.to(MixNet.get_device())
         self.input_size_ = 2
@@ -28,7 +29,7 @@ class MixNet(torch.nn.Module):
     ):
         self.train()
         device = self.get_device()
-
+        batch_loss = torch.zeros(len(data_loader))
         for t in range(n_epochs):
             for batch, (X, y) in enumerate(data_loader):
                 X, y = X.to(device), y.to(device)
@@ -41,19 +42,20 @@ class MixNet(torch.nn.Module):
                 loss.backward()
                 self.optimizer.step()
                 self.optimizer.zero_grad()
+                if (track_loss or verbose) and t == 0 or (t + 1) % verbose_step == 0:
+                    batch_loss[batch] = loss
 
             if t == 0 or (t + 1) % verbose_step == 0:
-                loss_value = loss.item()
+                loss_std, loss_mean = torch.std_mean(batch_loss)
                 if verbose:
                     print(
-                        f"Loss: {loss_value:>7f} [{t + 1:>5d}/{n_epochs:>5d}]",
+                        f"Loss: {loss_mean.item():>7f} [{t + 1:>5d}/{n_epochs:>5d}]",
                         flush=True,
                     )
                 if track_loss:
-                    self.loss_.append(loss_value)
+                    self.mean_loss_.append(loss_mean.item())
+                    self.std_loss_.append(loss_std.item())
                     self.epochs_.append(t)
-        if verbose:
-            print(f"Loss: {loss_value:>7f} [{t + 1:>5d}/{n_epochs:>5d}]", flush=True)
 
     def __calculate_loss(self, y_pred, y):
         """Private loss function to provide for easy extension"""
