@@ -5,12 +5,12 @@ from torchvision import transforms, datasets
 import sys
 import pathlib
 
-sys.path.insert(0, str(pathlib.Path("../").resolve()))
+sys.path.insert(0, str(pathlib.Path("../../").resolve()))
 from mixin import MixNet
 
 
 def get_mnist(train=True):
-    data_dir = pathlib.Path(__file__).parents[1].joinpath("data")
+    data_dir = pathlib.Path("../../").resolve().joinpath("data")
     tx = transforms.Compose([transforms.ToTensor(), transforms.Normalize(0, 1)])
     return datasets.MNIST(root=data_dir, transform=tx, train=train)
 
@@ -36,7 +36,7 @@ class MnistMLP(MixNet):
         return logits
 
 
-class L2RegularizedMnistMLP(MnistMLP):
+class L2WeightDecayMnistMLP(MnistMLP):
     def __init__(self, rate=1e-3, h1_size=784, h2_size=392, weight_decay=0.01):
         super().__init__(rate, h1_size, h2_size)
         self.optimizer = torch.optim.SGD(
@@ -45,16 +45,17 @@ class L2RegularizedMnistMLP(MnistMLP):
         self.weight_decay = weight_decay
 
 
-class L1RegularizedMnistMLP(MnistMLP):
-    def __init__(self, rate=1e-3, h1_size=784, h2_size=392, weight_decay=0.01):
+class RegularizedMnistMLP(MnistMLP):
+    def __init__(self, norm=2, rate=1e-3, h1_size=784, h2_size=392, weight_decay=0.01):
         super().__init__(rate, h1_size, h2_size)
         self.weight_decay = torch.tensor(weight_decay)
+        self.norm = norm
 
     def __calculate_loss(self, y_pred, y):
         unweighed_loss = super().__calculate_loss(y_pred, y)
         # don't penalize bias parameters per p. 223 of Goodfellow et al.
         weight_norm = sum(
-            torch.linalg.norm(p, 1)
+            torch.linalg.norm(p, self.norm)
             for (name, p) in self.named_parameters()
             if "bias" not in name
         )
