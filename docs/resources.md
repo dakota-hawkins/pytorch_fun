@@ -52,6 +52,7 @@
  	* [ ] [Chen 2023, Xtrimo, Arxiv](https://www.biorxiv.org/content/10.1101/2023.07.05.547496v3.full.pdf)
   	* [x] [Castro 2022, ReLSO, Nature](https://www.nature.com/articles/s42256-022-00532-1)
   	* [x] [Sun 2023, µFormer, Arxiv](https://www.biorxiv.org/content/10.1101/2023.11.16.565910v2)
+  		* [Notes](notes/muFormer.md) 	
 * Autoencoders
 	* [ ] [Deep Learning Book](https://www.deeplearningbook.org/contents/autoencoders.html)
 * Basics
