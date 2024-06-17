@@ -50,8 +50,8 @@
 	* [ ] [Rives 2021, PNAS](https://www.pnas.org/doi/epdf/10.1073/pnas.2016239118)
 	* [ ] [Lin 2023, ESM2, Science](https://www.science.org/doi/10.1126/science.ade2574)
  	* [ ] [Chen 2023, Xtrimo, Arxiv](https://www.biorxiv.org/content/10.1101/2023.07.05.547496v3.full.pdf)
-  	* [ ] [Castro 2022, ReLSO, Nature](https://www.nature.com/articles/s42256-022-00532-1)
-  	* [ ] [Sun 2023, µFormer, Arxiv](https://www.biorxiv.org/content/10.1101/2023.11.16.565910v2)
+  	* [x] [Castro 2022, ReLSO, Nature](https://www.nature.com/articles/s42256-022-00532-1)
+  	* [x] [Sun 2023, µFormer, Arxiv](https://www.biorxiv.org/content/10.1101/2023.11.16.565910v2)
 * Autoencoders
 	* [ ] [Deep Learning Book](https://www.deeplearningbook.org/contents/autoencoders.html)
 * Basics
