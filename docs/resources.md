@@ -1,7 +1,7 @@
 # Things to Read, Review, and Learn
 
 - [ ] GNNs
-	- [ ] Attention
+- [ ] Attention
 - [ ] LLMs
 - [ ] Transformers
 - [ ] Autoencoders
@@ -27,7 +27,9 @@
 * Graphical Neural Nets
 	* [ ] [distill.pub](https://distill.pub/2021/gnn-intro/#graph-attention-networks)
 - Attention
-	- [ ] [Machine Learning Mastery](https://machinelearningmastery.com/the-attention-mechanism-from-scratch/)
+	- [x] [Machine Learning Mastery](https://machinelearningmastery.com/the-attention-mechanism-from-scratch/)
+ 	- [ ] [Machine Learning Mastery](https://machinelearningmastery.com/the-transformer-attention-mechanism/)
+  	- [ ] [Lillian Weng](https://lilianweng.github.io/posts/2018-06-24-attention/)
 - Generative Models
 	- [ ] [Generative Adversarial Networks, Lillian Weng](https://lilianweng.github.io/posts/2017-08-20-gan/)
 	- [ ] [Variational Auto Encoders, Lillian Weng](https://lilianweng.github.io/posts/2018-08-12-vae/)
