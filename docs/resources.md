@@ -6,12 +6,12 @@
 - [ ] Transformers
 - [ ] Autoencoders
 - [ ] RNNs
-- [ ] Basics
+- [x] Basics
 	- [x] Linear Algebra
 	- [x] Probability
 	- [x] Numerical Computation
 	- [x] Training
- 	- [ ] Regularization
+ 	- [x] Regularization
 
 
 ## Resources
