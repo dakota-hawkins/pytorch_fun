@@ -5,12 +5,13 @@ from torchvision import transforms, datasets
 import sys
 import pathlib
 
-sys.path.insert(0, str(pathlib.Path("../../").resolve()))
+ROOT_DIR = pathlib.Path(__file__).parents[2]
+sys.path.insert(0, str(ROOT_DIR))
 from mixin import MixNet
 
 
 def get_mnist(train=True):
-    data_dir = pathlib.Path("../../").resolve().joinpath("data")
+    data_dir = ROOT_DIR.joinpath("data")
     tx = transforms.Compose([transforms.ToTensor(), transforms.Normalize(0, 1)])
     return datasets.MNIST(root=data_dir, transform=tx, train=train)
 
