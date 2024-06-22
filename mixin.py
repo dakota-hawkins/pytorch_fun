@@ -8,8 +8,8 @@ class MixNet(torch.nn.Module):
         self.mean_loss_ = []
         self.std_loss_ = []
         self.epochs_ = []
-        self.to(MixNet.get_device())
         self.input_size_ = 2
+        self.to(self.get_device())
 
     @staticmethod
     def get_device() -> str:
@@ -34,14 +34,8 @@ class MixNet(torch.nn.Module):
             for batch, (X, y) in enumerate(data_loader):
                 X, y = X.to(device), y.to(device)
 
-                y_pred = self(X)
-                # function call to allow subclass specific loss evaluations
-                loss = self.__calculate_loss(y_pred, y)
+                loss = self.__partial_fit(X, y)
 
-                # backprop
-                loss.backward()
-                self.optimizer.step()
-                self.optimizer.zero_grad()
                 if (track_loss or verbose) and t == 0 or (t + 1) % verbose_step == 0:
                     batch_loss[batch] = loss
 
@@ -56,6 +50,17 @@ class MixNet(torch.nn.Module):
                     self.mean_loss_.append(loss_mean.item())
                     self.std_loss_.append(loss_std.item())
                     self.epochs_.append(t)
+
+    def __partial_fit(self, X: torch.Tensor, y: torch.Tensor):
+        y_pred = self(X)
+        # function call to allow bespoke loss evaluations
+        loss = self.__calculate_loss(y_pred, y)
+
+        # backprop
+        loss.backward()
+        self.optimizer.step()
+        self.optimizer.zero_grad()
+        return loss
 
     def __calculate_loss(self, y_pred, y):
         """Private loss function to provide for easy extension"""
