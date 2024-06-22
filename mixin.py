@@ -51,7 +51,7 @@ class MixNet(torch.nn.Module):
                     self.std_loss_.append(loss_std.item())
                     self.epochs_.append(t)
 
-    def __partial_fit(self, X: torch.Tensor, y: torch.Tensor):
+    def __partial_fit(self, X: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
         y_pred = self(X)
         # function call to allow bespoke loss evaluations
         loss = self.__calculate_loss(y_pred, y)
