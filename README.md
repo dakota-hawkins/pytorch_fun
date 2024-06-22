@@ -7,18 +7,21 @@ practices, and implementation strategies.
 
 ```
 pytorch_fun
- ┣ data  -----------------> Data lives here locally
+ ┣ data  -----------------------> Data lives here locally
  ┃ ┗ .gitkeep
  ┣ docs
- ┃ ┗ resources.md  -------> Some resources I've used
+ ┃ ┗ resources.md  -------------> Some resources I've used
  ┣ models
- ┃ ┣ weight_decay --------> L1/L2 weight decay exploration
+ ┃ ┣ early_adversarial_droput --> Early stopping, adversarial training, and dropout
  ┃ ┃ ┣ nets.py  
  ┃ ┃ ┗ training.ipynb
- ┃ ┗ xor  ----------------> XOR implementation with 2D MLP
+ ┃ ┣ weight_decay --------------> L1/L2 weight decay regularization
+ ┃ ┃ ┣ nets.py  
+ ┃ ┃ ┗ training.ipynb
+ ┃ ┗ xor  ----------------------> XOR implementation with 2D MLP
  ┃ ┃ ┣ net.py  
  ┃ ┃ ┗ training.ipynb
  ┣ .gitignore
- ┣ mixin.py  -------------> Mixin nn.Module for basic boiler plate
+ ┣ mixin.py  -------------------> Mixin nn.Module for basic boiler plate
  ┗ README.md
  ```
