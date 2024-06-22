@@ -25,7 +25,8 @@
 ## Topic Papers, Book Chapters, and Posts
 
 * Graphical Neural Nets
-	* [ ] [distill.pub](https://distill.pub/2021/gnn-intro/#graph-attention-networks)
+	- [ ] [Graph Representation Learning, McGill](https://www.cs.mcgill.ca/~wlh/grl_book/)
+	- [ ] [distill.pub](https://distill.pub/2021/gnn-intro/#graph-attention-networks)
 - Attention
 	- [x] [Machine Learning Mastery](https://machinelearningmastery.com/the-attention-mechanism-from-scratch/)
  	- [ ] [Machine Learning Mastery](https://machinelearningmastery.com/the-transformer-attention-mechanism/)
