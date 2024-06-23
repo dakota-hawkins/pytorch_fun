@@ -1,6 +1,7 @@
 import torch
 import torchviz
 import tempfile
+import pathlib
 
 from torch.utils.data.dataloader import DataLoader
 
@@ -31,6 +32,7 @@ class MixNet(torch.nn.Module):
         track_loss=False,
         early_stopping: bool = False,
         test_loader: DataLoader | None = None,
+        early_step_size: int = 1,
     ):
         self.train()
         self.verbose_ = verbose
@@ -42,7 +44,9 @@ class MixNet(torch.nn.Module):
             self.__fit(data_loader, verbose_step)
         else:
             assert test_loader is not None
-            self.__early_stop_fit(data_loader, test_loader, verbose_step)
+            self.__early_stop_fit(
+                data_loader, test_loader, verbose_step, early_step_size
+            )
 
     def __log_loss(self, epoch: int, print_loss: bool):
         if self.track_loss_ or self.verbose_:
@@ -71,13 +75,19 @@ class MixNet(torch.nn.Module):
         step_size: int,
     ):
         best_loss = float("inf")
-        model_local = tempfile.TemporaryFile(suffix=".pt")
+        temp_dir = tempfile.TemporaryDirectory()
+        model_local = pathlib.Path(temp_dir.name).joinpath("best_model.pt")
+        self.test_loss_ = []
+        self.test_loss_epochs_ = []
         for t in range(self.n_epochs_):
             self.__batch_fit(
                 data_loader=training_loader, batch_idx=t, verbose_step=verbose_step
             )
+            self.__log_loss(epoch=t, print_loss=t == 0 or (t + 1) % verbose_step == 0)
             if (t % step_size) == 0:
                 test_loss = self.test(test_loader)
+                self.test_loss_.append(test_loss)
+                self.test_loss_epochs_.append(t)
                 if test_loss < best_loss:
                     best_loss = test_loss
                 self.cache_model(model_local)
