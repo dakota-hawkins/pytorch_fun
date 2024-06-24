@@ -49,7 +49,7 @@ class MixNet(torch.nn.Module):
             )
 
     def __log_loss(self, epoch: int, print_loss: bool):
-        if self.track_loss_ or self.verbose_:
+        if (self.track_loss_ or self.verbose_) and print_loss:
             loss_std, loss_mean = torch.std_mean(self.batch_loss_)
             self.mean_loss_.append(loss_mean.item())
             self.std_loss_.append(loss_std.item())
@@ -75,29 +75,31 @@ class MixNet(torch.nn.Module):
         step_size: int,
     ):
         best_loss = float("inf")
-        temp_dir = tempfile.TemporaryDirectory()
-        model_local = pathlib.Path(temp_dir.name).joinpath("best_model.pt")
         self.test_loss_ = []
         self.test_loss_epochs_ = []
-        for t in range(self.n_epochs_):
-            self.__batch_fit(
-                data_loader=training_loader, batch_idx=t, verbose_step=verbose_step
-            )
-            self.__log_loss(epoch=t, print_loss=t == 0 or (t + 1) % verbose_step == 0)
-            if (t % step_size) == 0:
-                test_loss = self.test(test_loader)
-                self.test_loss_.append(test_loss)
-                self.test_loss_epochs_.append(t)
-                if test_loss < best_loss:
-                    best_loss = test_loss
-                self.cache_model(model_local)
-        self.load_saved_model(model_local)
+        with tempfile.TemporaryDirectory() as tmpdir:
+            model_local = pathlib.Path(tmpdir).joinpath("model_checkpoint.pt")
+            for t in range(self.n_epochs_):
+                self.__batch_fit(
+                    data_loader=training_loader, batch_idx=t, verbose_step=verbose_step
+                )
+                self.__log_loss(
+                    epoch=t, print_loss=t == 0 or (t + 1) % verbose_step == 0
+                )
+                if (t % step_size) == 0:
+                    test_loss = self.test(test_loader)
+                    self.test_loss_.append(test_loss)
+                    self.test_loss_epochs_.append(t)
+                    if test_loss < best_loss:
+                        best_loss = test_loss
+                    self.cache_model(model_local)
+            self.load_saved_model(model_local)
 
     def cache_model(self, path: str):
         torch.save(self.state_dict(), path)
 
     def load_saved_model(self, path: str):
-        self.load_saved_model(torch.load(path))
+        self.load_state_dict(torch.load(path))
 
     def __batch_fit(
         self, data_loader: DataLoader, batch_idx: int, verbose_step: int
