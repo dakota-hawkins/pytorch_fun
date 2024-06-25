@@ -13,7 +13,7 @@ pytorch_fun
  ┃ ┗ resources.md  -------------> Some resources I've used
  ┣ models
  ┃ ┣ early_adversarial_droput --> Early stopping, adversarial training, and dropout
- ┃ ┃ ┣ nets.py  
+ ┃ ┃ ┣ adversarial.py  
  ┃ ┃ ┗ training.ipynb
  ┃ ┣ weight_decay --------------> L1/L2 weight decay regularization
  ┃ ┃ ┣ nets.py  
