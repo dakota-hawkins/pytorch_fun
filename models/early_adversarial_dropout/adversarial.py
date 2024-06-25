@@ -53,12 +53,9 @@ class DropOutMLP(MnistMLP):
     ):
         super().__init__(rate, h1_size, h2_size)
         self.mlp = nn.Sequential(
-            nn.Dropout(p=p_dropout_in),
             nn.Linear(self.input_size_, h1_size),
             nn.ReLU(),
-            nn.Dropout(p=p_dropout_h),
             nn.Linear(h1_size, h2_size),
-            nn.Dropout(p=p_dropout_h),
             nn.ReLU(),
             nn.Dropout(p=p_dropout_h),
             nn.Linear(h2_size, 10),
