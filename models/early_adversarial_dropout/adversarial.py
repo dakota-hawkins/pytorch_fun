@@ -28,18 +28,21 @@ class AdversarialMLP(MnistMLP):
         return X + self.epsilon * gradients.sign()
         # return self.normalize_image_(X + self.epsilon * gradients.sign())
 
-    def __partial_fit(self, X, y):
+    def partial_fit(self, X, y):
+        self.optimizer.zero_grad()
         X.requires_grad = True
         main_loss = self.__calculate_loss(self(X), y)
-        main_loss.backward()
+        main_loss.backward(retain_graph=True)
         X_adv = self.make_adversarial_examples(X, X.grad.data)
         adversarial_loss = self.__calculate_loss(self(X_adv), y)
 
         loss = self.alpha * main_loss + (1 - self.alpha) * adversarial_loss
         loss.backward()
         self.optimizer.step()
-        self.optimizer.zero_grad()
         return loss
+
+    def __calculate_loss(self, y_pred, y):
+        return self.loss(y_pred, y)
 
 
 class DropOutMLP(MnistMLP):

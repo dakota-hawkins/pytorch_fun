@@ -106,7 +106,7 @@ class MixNet(torch.nn.Module):
     ) -> torch.Tensor:
         for batch, (X, y) in enumerate(data_loader):
             X, y = X.to(self.fit_device_), y.to(self.fit_device_)
-            loss = self.__partial_fit(X, y)
+            loss = self.partial_fit(X, y)
 
             if (
                 (self.track_loss_ or self.verbose_)
@@ -115,7 +115,8 @@ class MixNet(torch.nn.Module):
             ):
                 self.batch_loss_[batch] = loss.item()
 
-    def __partial_fit(self, X: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
+    def partial_fit(self, X: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
+        self.optimizer.zero_grad()
         y_pred = self(X)
         # function call to allow bespoke loss evaluations
         loss = self.__calculate_loss(y_pred, y)
@@ -123,7 +124,6 @@ class MixNet(torch.nn.Module):
         # backprop
         loss.backward()
         self.optimizer.step()
-        self.optimizer.zero_grad()
         return loss
 
     def __calculate_loss(self, y_pred, y):

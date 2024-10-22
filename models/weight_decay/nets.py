@@ -36,6 +36,9 @@ class MnistMLP(MixNet):
         logits = self.mlp(X)
         return logits
 
+    def __calculate_loss(self, y_pred, y):
+        return self.loss(y_pred, y)
+
 
 class L2WeightDecayMnistMLP(MnistMLP):
     def __init__(self, rate=1e-3, h1_size=784, h2_size=392, weight_decay=0.01):
